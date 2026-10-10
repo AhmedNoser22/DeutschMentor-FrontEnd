@@ -2,8 +2,11 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { filter, map } from 'rxjs';
+import { ExercisePlayerComponent } from '../../components/exercises/exercise-player.component';
 import { GrammarCardComponent } from '../../components/grammar/grammar-card.component';
+import { ReadingViewComponent } from '../../components/reading/reading-view.component';
 import { WordCardComponent } from '../../components/vocabulary/word-card.component';
+import { WritingViewComponent } from '../../components/writing/writing-view.component';
 import { toApiError } from '../../core/models/api-error.model';
 import { LESSON_STEPS, LessonStep } from '../../domain/enums/learning.enums';
 import { GrammarTopic } from '../../models/grammar/grammar.models';
@@ -17,7 +20,15 @@ import { LearningStore } from '../../state/learning/learning.store';
 
 @Component({
   selector: 'dm-lesson-page',
-  imports: [RouterLink, IconComponent, WordCardComponent, GrammarCardComponent],
+  imports: [
+    RouterLink,
+    IconComponent,
+    WordCardComponent,
+    GrammarCardComponent,
+    ExercisePlayerComponent,
+    ReadingViewComponent,
+    WritingViewComponent
+  ],
   template: `
     <section class="page">
       <a class="back-link" routerLink="/learn" [queryParams]="backParams()">
@@ -45,7 +56,7 @@ import { LearningStore } from '../../state/learning/learning.store';
             <button type="button" role="tab" class="step" [class.active]="tab() === step" [attr.aria-selected]="tab() === step" (click)="open(step)">
               {{ step }}
               @if (seen().has(step)) {
-                <span class="seen-dot" title="Seen"></span>
+                <span class="seen-dot" title="Done"></span>
               }
             </button>
           }
@@ -85,19 +96,19 @@ import { LearningStore } from '../../state/learning/learning.store';
               }
             }
             @case (LessonStep.Practice) {
-              <div class="card"><h2>Practice</h2><p class="muted">Exercises for this lesson arrive in phase 5. Opening this tab counts the step as seen for now.</p></div>
+              <dm-exercise-player [lessonId]="l.id" (completed)="complete(LessonStep.Practice)" />
             }
             @case (LessonStep.Reading) {
-              <div class="card"><h2>Reading</h2><p class="muted">Reading texts and questions arrive in phase 6. Opening this tab counts the step as seen for now.</p></div>
+              <dm-reading-view [lessonId]="l.id" (completed)="complete(LessonStep.Reading)" />
             }
             @case (LessonStep.Writing) {
-              <div class="card"><h2>Writing</h2><p class="muted">Writing tasks arrive in phase 6. Opening this tab counts the step as seen for now.</p></div>
+              <dm-writing-view [lessonId]="l.id" (completed)="complete(LessonStep.Writing)" />
             }
           }
         </div>
 
         <footer class="foot">
-          <span class="muted">{{ seen().size }} of {{ steps.length }} steps seen</span>
+          <span class="muted">{{ seen().size }} of {{ steps.length }} steps done</span>
           @if (l.isCompleted) {
             <a class="btn btn-dark" routerLink="/learn" [queryParams]="{ level: l.levelCode }">Back to path</a>
           } @else {
@@ -131,7 +142,6 @@ import { LearningStore } from '../../state/learning/learning.store';
       .step.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
       .seen-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
       .panel { min-height: 160px; margin-bottom: 1.25rem; }
-      .panel h2 { margin-bottom: 0.5rem; font-size: 1.6rem; }
       .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
     `
   ]
@@ -146,6 +156,7 @@ export class LessonPage {
 
   protected readonly LessonStep = LessonStep;
   protected readonly steps = LESSON_STEPS;
+  private readonly seenOnOpen: readonly LessonStep[] = [LessonStep.Vocabulary, LessonStep.Grammar];
 
   protected readonly lesson = signal<LessonDetail | null>(null);
   protected readonly seen = signal<ReadonlySet<LessonStep>>(new Set<LessonStep>());
@@ -194,7 +205,14 @@ export class LessonPage {
       });
     }
 
-    if (!this.seen().has(step)) {
+    if (this.seenOnOpen.includes(step) && !this.seen().has(step)) {
+      this.markSeen(lesson.id, step);
+    }
+  }
+
+  protected complete(step: LessonStep): void {
+    const lesson = this.lesson();
+    if (lesson && !this.seen().has(step)) {
       this.markSeen(lesson.id, step);
     }
   }
