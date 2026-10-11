@@ -8,4 +8,5 @@ export interface User {
   currentLevel: CefrLevel;
   startPreference: StartPreference;
   hasPassword: boolean;
+  placementAvailable: boolean;
 }

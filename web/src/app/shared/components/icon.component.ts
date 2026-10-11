@@ -16,7 +16,10 @@ export type IconName =
   | 'lock'
   | 'clock'
   | 'chevron-down'
-  | 'search';
+  | 'search'
+  | 'flag'
+  | 'copy'
+  | 'download';
 
 const ICONS: Record<IconName, string[]> = {
   home: ['M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z'],
@@ -34,7 +37,10 @@ const ICONS: Record<IconName, string[]> = {
   lock: ['M6 11h12v9H6z', 'M8.5 11V8a3.5 3.5 0 0 1 7 0v3'],
   clock: ['M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0', 'M12 7v5l3 2'],
   'chevron-down': ['M6 9l6 6 6-6'],
-  search: ['M4 11a7 7 0 1 0 14 0a7 7 0 1 0-14 0', 'M20 20l-4-4']
+  search: ['M4 11a7 7 0 1 0 14 0a7 7 0 1 0-14 0', 'M20 20l-4-4'],
+  flag: ['M5 21V4', 'M5 4h11l-2 4 2 4H5'],
+  copy: ['M9 9h11v11H9z', 'M15 9V4H4v11h5'],
+  download: ['M12 4v11', 'M7 11l5 5 5-5', 'M5 20h14']
 };
 
 @Component({

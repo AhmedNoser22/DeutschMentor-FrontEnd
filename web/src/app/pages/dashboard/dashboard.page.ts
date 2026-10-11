@@ -11,6 +11,15 @@ import { AuthStore } from '../../state/auth/auth.store';
       <p class="eyebrow">{{ dateLabel }}</p>
       <h1 class="hello">{{ greeting }}, {{ firstName() }}.</h1>
 
+      @if (user()?.placementAvailable) {
+        <article class="card stack placement">
+          <p class="eyebrow">Placement test</p>
+          <h2>Find your level</h2>
+          <p class="muted">Answer a short test and begin at the level your answers show. It is offered once.</p>
+          <div><a class="btn btn-primary" routerLink="/exams">Take the placement test</a></div>
+        </article>
+      }
+
       <div class="grid-2">
         <article class="card">
           <p class="eyebrow">Your level</p>
@@ -31,7 +40,8 @@ import { AuthStore } from '../../state/auth/auth.store';
         <div><a class="btn btn-primary" routerLink="/learn">Open learning path</a></div>
       </article>
     </section>
-  `
+  `,
+  styles: [`.placement { margin-bottom: 1rem; border-color: var(--ink); }`]
 })
 export class DashboardPage {
   private readonly store = inject(AuthStore);
