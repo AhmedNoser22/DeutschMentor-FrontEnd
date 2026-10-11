@@ -2,6 +2,7 @@ import { Component, computed, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ThemeService } from '../../../core/services/theme.service';
 import { AuthStore } from '../../../state/auth/auth.store';
+import { ReviewStore } from '../../../state/review/review.store';
 import { IconComponent } from '../icon.component';
 import { LogoComponent } from '../logo.component';
 import { NAV_ITEMS } from './nav-items';
@@ -18,7 +19,10 @@ import { NAV_ITEMS } from './nav-items';
           @for (item of items(); track item.path) {
             <a [routerLink]="item.path" routerLinkActive="active" class="nav-link">
               <dm-icon [name]="item.icon" />
-              <span>{{ item.label }}</span>
+              <span class="label">{{ item.label }}</span>
+              @if (item.badge === 'review' && review.dueCount() > 0) {
+                <span class="count" [attr.aria-label]="review.dueCount() + ' cards due'">{{ review.dueCount() }}</span>
+              }
             </a>
           }
         </nav>
@@ -65,7 +69,12 @@ import { NAV_ITEMS } from './nav-items';
       <nav class="bottom-nav" aria-label="Main">
         @for (item of items(); track item.path) {
           <a [routerLink]="item.path" routerLinkActive="active">
-            <dm-icon [name]="item.icon" />
+            <span class="ico">
+              <dm-icon [name]="item.icon" />
+              @if (item.badge === 'review' && review.dueCount() > 0) {
+                <span class="dot">{{ review.dueCount() > 99 ? '99+' : review.dueCount() }}</span>
+              }
+            </span>
             <span>{{ item.shortLabel }}</span>
           </a>
         }
@@ -116,6 +125,21 @@ import { NAV_ITEMS } from './nav-items';
         text-decoration: none;
       }
       .bottom-nav a.active { color: var(--primary); }
+      .ico { position: relative; display: inline-flex; }
+      .dot {
+        position: absolute;
+        top: -6px;
+        right: -12px;
+        min-width: 1.15rem;
+        padding: 0 0.3rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        line-height: 1.15rem;
+        text-align: center;
+        color: #ffffff;
+        background: #c8231c;
+        border-radius: 999px;
+      }
 
       .nav-link {
         display: flex;
@@ -128,7 +152,19 @@ import { NAV_ITEMS } from './nav-items';
         color: var(--ink-soft);
         text-decoration: none;
       }
+      .nav-link .label { flex: 1; }
       .nav-link.active { background: var(--ink); color: var(--bg); }
+      .count {
+        min-width: 1.5rem;
+        padding: 0 0.45rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        line-height: 1.5rem;
+        text-align: center;
+        color: #ffffff;
+        background: #c8231c;
+        border-radius: 6px;
+      }
 
       .me { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
       .avatar {
@@ -173,6 +209,7 @@ import { NAV_ITEMS } from './nav-items';
 export class ShellComponent implements OnInit {
   protected readonly store = inject(AuthStore);
   protected readonly theme = inject(ThemeService);
+  protected readonly review = inject(ReviewStore);
 
   protected readonly items = computed(() =>
     NAV_ITEMS.filter((item) => !item.adminOnly || this.store.isAdmin())
@@ -180,5 +217,6 @@ export class ShellComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.loadProfile().subscribe({ error: () => undefined });
+    this.review.refresh();
   }
 }

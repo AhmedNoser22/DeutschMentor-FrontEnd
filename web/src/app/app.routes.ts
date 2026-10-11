@@ -37,13 +37,16 @@ export const routes: Routes = [
       { path: 'grammar', loadComponent: () => import('./pages/grammar/grammar-library.page').then((m) => m.GrammarLibraryPage) },
       { path: 'grammar/:id', loadComponent: () => import('./pages/grammar/grammar-topic.page').then((m) => m.GrammarTopicPage) },
 
+      { path: 'review', loadComponent: () => import('./pages/review/review.page').then((m) => m.ReviewPage) },
+      { path: 'drills/articles', loadComponent: () => import('./pages/drills/article-drill.page').then((m) => m.ArticleDrillPage) },
+      { path: 'achievements', loadComponent: () => import('./pages/progress/achievements.page').then((m) => m.AchievementsPage) },
+
       { path: 'exams', loadComponent: () => import('./pages/exams/exams.page').then((m) => m.ExamsPage) },
       { path: 'exams/take/:id', loadComponent: () => import('./pages/exams/exam-take.page').then((m) => m.ExamTakePage) },
       { path: 'exams/result/:id', loadComponent: () => import('./pages/exams/exam-result.page').then((m) => m.ExamResultPage) },
 
       { path: 'certificates', loadComponent: () => import('./pages/certificates/certificates.page').then((m) => m.CertificatesPage) },
 
-      { path: 'review', data: { title: 'Spaced review', phase: 'phase 9' }, loadComponent: comingSoon },
       { path: 'admin', canActivate: [adminGuard], data: { title: 'Admin', phase: 'phase 10' }, loadComponent: comingSoon }
     ]
   },

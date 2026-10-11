@@ -19,7 +19,9 @@ export type IconName =
   | 'search'
   | 'flag'
   | 'copy'
-  | 'download';
+  | 'download'
+  | 'flame'
+  | 'book';
 
 const ICONS: Record<IconName, string[]> = {
   home: ['M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z'],
@@ -40,7 +42,9 @@ const ICONS: Record<IconName, string[]> = {
   search: ['M4 11a7 7 0 1 0 14 0a7 7 0 1 0-14 0', 'M20 20l-4-4'],
   flag: ['M5 21V4', 'M5 4h11l-2 4 2 4H5'],
   copy: ['M9 9h11v11H9z', 'M15 9V4H4v11h5'],
-  download: ['M12 4v11', 'M7 11l5 5 5-5', 'M5 20h14']
+  download: ['M12 4v11', 'M7 11l5 5 5-5', 'M5 20h14'],
+  flame: ['M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z'],
+  book: ['M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z', 'M5 17a3 3 0 0 1 3-3h11']
 };
 
 @Component({
