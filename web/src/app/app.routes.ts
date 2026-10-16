@@ -46,8 +46,7 @@ export const routes: Routes = [
       { path: 'exams/result/:id', loadComponent: () => import('./pages/exams/exam-result.page').then((m) => m.ExamResultPage) },
 
       { path: 'certificates', loadComponent: () => import('./pages/certificates/certificates.page').then((m) => m.CertificatesPage) },
-
-      { path: 'admin', canActivate: [adminGuard], data: { title: 'Admin', phase: 'phase 10' }, loadComponent: comingSoon }
+      { path: 'admin', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/admin.page').then((m) => m.AdminPage) }
     ]
   },
   { path: '**', redirectTo: '' }
