@@ -46,6 +46,7 @@ export const routes: Routes = [
       { path: 'exams/result/:id', loadComponent: () => import('./pages/exams/exam-result.page').then((m) => m.ExamResultPage) },
 
       { path: 'certificates', loadComponent: () => import('./pages/certificates/certificates.page').then((m) => m.CertificatesPage) },
+      { path: 'admin/users', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/admin-users.page').then((m) => m.AdminUsersPage) },
       { path: 'admin', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/admin.page').then((m) => m.AdminPage) }
     ]
   },

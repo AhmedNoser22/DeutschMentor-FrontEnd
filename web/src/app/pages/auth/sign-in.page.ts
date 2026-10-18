@@ -6,10 +6,17 @@ import { GoogleButtonComponent } from '../../components/auth/google-button.compo
 import { ApiError, toApiError } from '../../core/models/api-error.model';
 import { showError } from '../../shared/validators/password.validator';
 import { AuthStore } from '../../state/auth/auth.store';
+import { PasswordFieldComponent } from '../../components/auth/password-field.component';
 
 @Component({
   selector: 'dm-sign-in-page',
-  imports: [ReactiveFormsModule, RouterLink, AuthLayoutComponent, GoogleButtonComponent],
+  imports: [
+  ReactiveFormsModule,
+  RouterLink,
+  AuthLayoutComponent,
+  GoogleButtonComponent,
+  PasswordFieldComponent
+],
   template: `
     <dm-auth-layout>
       <h2 class="auth-title">Welcome back</h2>
@@ -32,7 +39,7 @@ import { AuthStore } from '../../state/auth/auth.store';
 
         <div class="field">
           <label for="password">Password</label>
-          <input id="password" class="input" type="password" formControlName="password" autocomplete="current-password" placeholder="Your password" [class.invalid]="show(form.controls.password)" />
+          <dm-password-field inputId="password" formControlName="password" autocomplete="current-password" placeholder="Your password" [invalid]="show(form.controls.password)" />
           @if (show(form.controls.password)) {
             <span class="field-error">Enter your password.</span>
           }

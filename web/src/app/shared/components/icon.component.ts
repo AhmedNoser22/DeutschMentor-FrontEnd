@@ -21,7 +21,9 @@ export type IconName =
   | 'copy'
   | 'download'
   | 'flame'
-  | 'book';
+  | 'book'
+  | 'eye'
+  | 'eye-off';
 
 const ICONS: Record<IconName, string[]> = {
   home: ['M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z'],
@@ -44,7 +46,9 @@ const ICONS: Record<IconName, string[]> = {
   copy: ['M9 9h11v11H9z', 'M15 9V4H4v11h5'],
   download: ['M12 4v11', 'M7 11l5 5 5-5', 'M5 20h14'],
   flame: ['M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z'],
-  book: ['M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z', 'M5 17a3 3 0 0 1 3-3h11']
+  book: ['M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z', 'M5 17a3 3 0 0 1 3-3h11'],
+  eye: ['M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z', 'M9 12a3 3 0 1 0 6 0a3 3 0 1 0-6 0'],
+  'eye-off': ['M3 3l18 18', 'M10.6 5.1A9.6 9.6 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.2', 'M6.3 6.3A17 17 0 0 0 2 12s3.5 7 10 7a9.7 9.7 0 0 0 4-.9', 'M9.9 9.9a3 3 0 0 0 4.2 4.2']
 };
 
 @Component({

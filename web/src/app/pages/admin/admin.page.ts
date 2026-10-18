@@ -3,14 +3,16 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { toApiError } from '../../core/models/api-error.model';
 import { AdminLesson, AdminStats, AdminWriting, ExamPoolRow, ImportReport } from '../../models/admin/admin.models';
 import { AdminApiService } from '../../services/admin/admin-api.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'dm-admin-page',
-  imports: [DatePipe],
+  imports: [DatePipe,RouterLink ],
   template: `
     <section class="page">
       <p class="eyebrow">Admin</p>
       <h1 class="hello">Content</h1>
+      <p><a class="btn btn-dark" routerLink="/admin/users">Manage users</a></p>
 
       @if (error()) {
         <div class="alert alert-error" role="alert">{{ error() }}</div>

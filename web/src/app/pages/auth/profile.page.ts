@@ -3,10 +3,11 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { toApiError } from '../../core/models/api-error.model';
 import { showError, strongPassword } from '../../shared/validators/password.validator';
 import { AuthStore } from '../../state/auth/auth.store';
+import { PasswordFieldComponent } from '../../components/auth/password-field.component';
 
 @Component({
   selector: 'dm-profile-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, PasswordFieldComponent],
   template: `
     <section class="page">
       <p class="eyebrow">Account</p>
@@ -53,13 +54,13 @@ import { AuthStore } from '../../state/auth/auth.store';
             @if (hasPassword()) {
               <div class="field">
                 <label for="currentPassword">Current password</label>
-                <input id="currentPassword" class="input" type="password" formControlName="currentPassword" autocomplete="current-password" />
+                <dm-password-field inputId="currentPassword" formControlName="currentPassword" autocomplete="current-password" />
               </div>
             }
 
             <div class="field">
               <label for="newPassword">New password</label>
-              <input id="newPassword" class="input" type="password" formControlName="newPassword" autocomplete="new-password" placeholder="At least 8 characters" [class.invalid]="show(passwordForm.controls.newPassword)" />
+              <dm-password-field inputId="newPassword" formControlName="newPassword" autocomplete="new-password" placeholder="At least 8 characters" [invalid]="show(passwordForm.controls.newPassword)" />
               @if (show(passwordForm.controls.newPassword)) {
                 <span class="field-error">Use at least 8 characters with a letter and a number.</span>
               }

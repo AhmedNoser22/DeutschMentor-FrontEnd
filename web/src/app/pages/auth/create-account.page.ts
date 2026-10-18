@@ -7,10 +7,11 @@ import { toApiError } from '../../core/models/api-error.model';
 import { StartPreference } from '../../domain/enums/user.enums';
 import { showError, strongPassword } from '../../shared/validators/password.validator';
 import { AuthStore } from '../../state/auth/auth.store';
+import { PasswordFieldComponent } from '../../components/auth/password-field.component';
 
 @Component({
   selector: 'dm-create-account-page',
-  imports: [ReactiveFormsModule, RouterLink, AuthLayoutComponent, GoogleButtonComponent],
+  imports: [ReactiveFormsModule, RouterLink, AuthLayoutComponent, GoogleButtonComponent, PasswordFieldComponent],
   template: `
     <dm-auth-layout>
       <h2 class="auth-title">Create your account</h2>
@@ -43,7 +44,7 @@ import { AuthStore } from '../../state/auth/auth.store';
 
         <div class="field">
           <label for="password">Password</label>
-          <input id="password" class="input" type="password" formControlName="password" autocomplete="new-password" placeholder="At least 8 characters" [class.invalid]="show(form.controls.password)" />
+         <dm-password-field inputId="password" formControlName="password" autocomplete="new-password" placeholder="At least 8 characters" [invalid]="show(form.controls.password)" />
           @if (show(form.controls.password)) {
             <span class="field-error">Use at least 8 characters with a letter and a number.</span>
           }

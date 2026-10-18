@@ -5,10 +5,11 @@ import { AuthLayoutComponent } from '../../components/auth/auth-layout.component
 import { toApiError } from '../../core/models/api-error.model';
 import { showError, strongPassword } from '../../shared/validators/password.validator';
 import { AuthStore } from '../../state/auth/auth.store';
+import { PasswordFieldComponent } from '../../components/auth/password-field.component';
 
 @Component({
   selector: 'dm-reset-password-page',
-  imports: [ReactiveFormsModule, RouterLink, AuthLayoutComponent],
+  imports: [ReactiveFormsModule, RouterLink, AuthLayoutComponent, PasswordFieldComponent],
   template: `
     <dm-auth-layout [showTabs]="false">
       <h2 class="auth-title">Choose a new password</h2>
@@ -39,7 +40,7 @@ import { AuthStore } from '../../state/auth/auth.store';
 
         <div class="field">
           <label for="newPassword">New password</label>
-          <input id="newPassword" class="input" type="password" formControlName="newPassword" autocomplete="new-password" placeholder="At least 8 characters" [class.invalid]="show(form.controls.newPassword)" />
+          <dm-password-field inputId="newPassword" formControlName="newPassword" autocomplete="new-password" placeholder="At least 8 characters" [invalid]="show(form.controls.newPassword)" />
           @if (show(form.controls.newPassword)) {
             <span class="field-error">Use at least 8 characters with a letter and a number.</span>
           }
