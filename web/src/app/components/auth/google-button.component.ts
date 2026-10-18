@@ -13,7 +13,14 @@ import { GoogleIdentityService } from '../../services/auth/google-identity.servi
   `,
   styles: [
     `
-      .host { display: flex; justify-content: center; min-height: 44px; }
+      :host { display: block; }
+      .host {
+        display: flex;
+        justify-content: center;
+        min-height: 44px;
+        color-scheme: light;
+        background: transparent;
+      }
       .note { text-align: center; font-size: 0.9rem; }
     `
   ]
