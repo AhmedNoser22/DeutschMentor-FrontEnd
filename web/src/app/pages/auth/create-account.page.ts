@@ -28,7 +28,7 @@ import { PasswordFieldComponent } from '../../components/auth/password-field.com
       <form class="stack" [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <div class="field">
           <label for="fullName">Full name</label>
-          <input id="fullName" class="input" type="text" formControlName="fullName" autocomplete="name" placeholder="Omar Hassan" [class.invalid]="show(form.controls.fullName)" />
+          <input id="fullName" class="input" type="text" formControlName="fullName" autocomplete="name" placeholder="Your Name" [class.invalid]="show(form.controls.fullName)" />
           @if (show(form.controls.fullName)) {
             <span class="field-error">Enter your full name.</span>
           }
