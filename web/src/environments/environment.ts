@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://YOUR-API-DOMAIN',
-  googleClientId: '796239693243-acubbkc32b3vngfiqqfjb5radhf6bd0t.apps.googleusercontent.com'
+  apiBaseUrl: 'https://deutschmentor.runasp.net',
+  googleClientId: '887724442358-9sf8kl5140t6hvnpomdenhgtjlup3qvu.apps.googleusercontent.com'
 };
